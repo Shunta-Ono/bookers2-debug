@@ -1,13 +1,24 @@
+
 <div class="row">
-<div class="col-md-6 col-md-offset-3">
+  <div class="col-md-6 col-md-offset-3">
+    <% if @book.errors.any? %>
+    <div class="error-message">
+      <h4 class="error-message-lead"><strong><%= @book.errors.count %> errors prohibited this user from being saved:</h4></strong>
+      <ul class="error-message-details">
+        <% @book.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+    <% end %>
 
-<h1>Editing Book</h1>
+    <h1>Editing Book</h1>
 
-<%= render "books/newform", book: @book %>
-<%= link_to "Show", @book, class: "book_#{@book.id}" %>
-<%= link_to "Back", books_path, class: "back" %>
+    <%= render "books/newform", book: @book %>
+    <%= link_to "Show", @book, class: "book_#{@book.id}" %>
+    <%= link_to "Back", books_path, class: "back" %>
 
-</div>
-<div class="col-md-3"></div>
+  </div>
+  <div class="col-md-3"></div>
 
 </div>
