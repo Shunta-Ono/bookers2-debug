@@ -75,3 +75,4 @@ gem "refile-mini_magick"
 
 gem 'jquery-rails'
 gem 'bootstrap-sass'
+gem 'kaminari','~> 1.1.1'

@@ -9,11 +9,12 @@ class BooksController < ApplicationController
 
   def show
     @book_new = Book.new
+    @book_comment = BookComment.new
   end
 
   def index
     @book = Book.new
-  	@books = Book.all #一覧表示するためにBookモデルの情報を全てくださいのall
+  	@books = Book.page(params[:page]).reverse_order
   end
 
   def create
