@@ -61,6 +61,31 @@
 					<% end %>
 				</tr>
 			</table>
+			<% @book.book_comments.each do |book_comment| %>
+				<div class="comment-body bb">
+					<div class="comment-text">
+						<div class="comment-author clearfix">
+							<a href="#" class="link-author"><%= book_comment.user.name %></a>
+							<span class="comment-meta">
+								<span class="comment-date">
+									<%= book_comment.created_at.strftime('%Y/%m/%d') %>
+								</span>
+							</span>
+						</div>
+						<div class="comment-entry">
+							<%= book_comment.comment %>
+						</div>
+					</div>
+				</div>
+			<% end %>
+			<%= form_for [@book, @book_comment] do |f| %>
+			<div class="row">
+				<div class="col-sm-12">
+					<%= f.text_area :comment, rows:'5', class: "form-control",placeholder: "コメントをここに入力してください" %>
+				</div>
+			</div>
+			<%= f.submit "送信する", class: "btn btn-lg btn-base-1 mt-20 pull-right" %>
+			<% end %>
 		</div>
 	</div>
 </div>
