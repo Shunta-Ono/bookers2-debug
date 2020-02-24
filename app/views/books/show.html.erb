@@ -1,4 +1,14 @@
 <div class="container">
+	<% if @book.errors.any? %>
+	<div class="error-message">
+		<h4 class="error-message-lead"><strong><%= @book.errors.count %> errors prohibited this user from being saved:</h4></strong>
+		<ul class="error-message-details">
+			<% @book.errors.full_messages.each do |message| %>
+			<li><%= message %></li>
+			<% end %>
+		</ul>
+	</div>
+	<% end %>
 	<div class="row">
 		<div class="col-xs-3">
 
@@ -41,15 +51,15 @@
 					<td><%= @book.body %></td>
 					<td>
 						<% if @book.favorited_by?(current_user) %>
-						  <%= link_to book_favorites_path(@book), method: :delete do %>
-						    <i class="glyphicon glyphicon-heart" aria-hidden="true" style="color: red;"></i>
-						    <%= @book.favorites.count %>
-						  <% end %>
+						<%= link_to book_favorites_path(@book), method: :delete do %>
+						<i class="glyphicon glyphicon-heart" aria-hidden="true" style="color: red;"></i>
+						<%= @book.favorites.count %>
+						<% end %>
 						<% else %>
-						  <%= link_to book_favorites_path(@book), method: :post do %>
-						    <i class="glyphicon glyphicon-heart" aria-hidden="true"></i>
-						    <%= @book.favorites.count %>
-						  <% end %>
+						<%= link_to book_favorites_path(@book), method: :post do %>
+						<i class="glyphicon glyphicon-heart" aria-hidden="true"></i>
+						<%= @book.favorites.count %>
+						<% end %>
 						<% end %>
 					</td>
 					<td>
@@ -61,22 +71,26 @@
 					<% end %>
 				</tr>
 			</table>
+			<h2>コメント一覧</h2>
 			<% @book.book_comments.each do |book_comment| %>
-				<div class="comment-body bb">
-					<div class="comment-text">
-						<div class="comment-author clearfix">
-							<a href="#" class="link-author"><%= book_comment.user.name %></a>
-							<span class="comment-meta">
-								<span class="comment-date">
-									<%= book_comment.created_at.strftime('%Y/%m/%d') %>
-								</span>
+			<div class="comment-body bb">
+				<div class="comment-text">
+					<div class="comment-author clearfix">
+						<a href="#" class="link-author"><%= book_comment.user.name %></a>
+						<span class="comment-meta">
+							<span class="comment-date">
+								<%= book_comment.created_at.strftime('%Y/%m/%d') %>
 							</span>
-						</div>
-						<div class="comment-entry">
-							<%= book_comment.comment %>
-						</div>
+							<% if book_comment.user_id == current_user.id %>
+							<%= link_to "コメントを削除する",book_book_comment_path(book_comment.book.id, book_comment.id) , method: :delete %>
+							<% end %>
+						</span>
+					</div>
+					<div class="comment-entry">
+						<%= book_comment.comment %>
 					</div>
 				</div>
+			</div>
 			<% end %>
 			<%= form_for [@book, @book_comment] do |f| %>
 			<div class="row">
