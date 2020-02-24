@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'book_comments/create'
+  get 'book_comments/destroy'
   get 'favorites/create'
   get 'favorites/destroy'
   get "home/about" => "homes#about"
@@ -6,6 +8,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users,only: [:show,:index,:edit,:update]
   resources :books do
+    resource :book_comments, only: [:create]
     resource :favorites, only: [:create, :destroy]
   end
 end
